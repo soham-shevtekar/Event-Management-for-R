@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Event Management</title>
+  <style>
+    /* General Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      background-color: #f0f8ff;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    /* Navbar Styling */
+    header {
+      background-color: #006d77;
+      color: #fff;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background-color: #003d46;
+      padding: 10px 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #80ffdb;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 15px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #80ffdb;
+    }
+
+    /* Hero Section Slider */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      animation: fadeInOut 12s infinite;
+    }
+
+    .slide:nth-child(1) {
+      background-image: url('https://via.placeholder.com/1200x500?text=Slide+1');
+    }
+
+    .slide:nth-child(2) {
+      background-image: url('https://via.placeholder.com/1200x500?text=Slide+2');
+      animation-delay: 4s;
+    }
+
+    .slide:nth-child(3) {
+      background-image: url('https://via.placeholder.com/1200x500?text=Slide+3');
+      animation-delay: 8s;
+    }
+
+    @keyframes slide {
+      0% {
+        left: 0;
+      }
+      33.33% {
+        left: 0;
+      }
+      44.44% {
+        left: -100%;
+      }
+      77.77% {
+        left: -100%;
+      }
+      88.88% {
+        left: -200%;
+      }
+      100% {
+        left: -200%;
+      }
+    }
+
+    @keyframes fadeInOut {
+      0%,
+      100% {
+        opacity: 0;
+      }
+      10%,
+      90% {
+        opacity: 1;
+      }
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      z-index: 10;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeUp 2s ease;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .btn {
+      background-color: #80ffdb;
+      color: #333;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .hero .btn:hover {
+      background-color: #333;
+      color: #80ffdb;
+    }
+
+    /* Event Section */
+    .events-section {
+      padding: 50px 0;
+      background-color: #fff;
+    }
+
+    .events-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #006d77;
+    }
+
+    .events-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .event-img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .event-card {
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      width: calc(33.33% - 20px);
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .event-card h3 {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .event-card p {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .event-card .btn {
+      background-color: #006d77;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .event-card .btn:hover {
+      background-color: #004e58;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #006d77;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+	
+	/* About Us Section */
+	.about-us {
+	    padding: 50px 0;
+	    background-color: #f8f9fa;
+	    position: relative;
+	}
+
+	.about-us h2 {
+	    text-align: center;
+	    font-size: 2.5rem;
+	    margin-bottom: 30px;
+	    color: #006d77;
+	    animation: fadeInDown 1s ease-in-out;
+	}
+
+	.about-content {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    flex-wrap: wrap;
+	    margin-bottom: 40px;
+	    animation: fadeInUp 1s ease-in-out;
+	}
+
+	.about-text {
+	    width: 60%;
+	}
+
+	.about-image {
+	    width: 30%;
+	}
+
+	.about-image img {
+	    width: 100%;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	    transition: transform 0.3s ease;
+	}
+
+	.about-image img:hover {
+	    transform: scale(1.05);
+	}
+
+	.about-vision {
+	    margin-top: 30px;
+	    padding: 20px;
+	    background-color: #e0f7fa;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.about-vision h3 {
+	    margin-bottom: 10px;
+	    color: #006d77;
+	}
+
+	.about-vision p {
+	    margin-bottom: 20px;
+	}
+
+	/* Animations */
+	@keyframes fadeInDown {
+	    0% {
+	        opacity: 0;
+	        transform: translateY(-20px);
+	    }
+	    100% {
+	        opacity: 1;
+	        transform: translateY(0);
+	    }
+	}
+
+	@keyframes fadeInUp {
+	    0% {
+	        opacity: 0;
+	        transform: translateY(20px);
+	    }
+	    100% {
+	        opacity: 1;
+	        transform: translateY(0);
+	    }
+	}
+	/* Navigation Link Styling */
+	.nav-link {
+	    color: rgb(128, 255, 255);                        /* Primary blue color */
+	    font-size: 18px;                       /* Text size */
+	    font-weight: 600;                      /* Semi-bold for emphasis */
+	    text-decoration: none;                 /* Remove underline */
+	    padding: 8px 16px;                     /* Padding for clickable area */
+	    position: relative;                    /* For pseudo-elements */
+	    transition: color 0.3s ease;           /* Smooth color transition */
+	}
+
+	/* Hover Effect - Text Color and Underline Animation */
+	.nav-link:hover {
+	    color: rgb(128, 255, 255);                        /* Darker blue on hover */
+	}
+
+	/* Underline Animation */
+	.nav-link::after {
+	    content: "";                           /* Empty content for underline */
+	    position: absolute;                    /* Positioning for underline */
+	    left: 0;                               /* Start at the left */
+	    bottom: 0;                             /* Position at bottom of link */
+	    width: 100%;                           /* Full width underline */
+	    height: 2px;                           /* Thin underline */
+	    background-color: rgb(128, 255, 255);             /* Match underline color to hover */
+	    transform: scaleX(0);                  /* Start invisible */
+	    transform-origin: right;               /* Animate from right to left */
+	    transition: transform 0.3s ease;       /* Smooth expand effect */
+	}
+
+	/* Hover - Underline Expands */
+	.nav-link:hover::after {
+	    transform: scaleX(1);                  /* Fully expand underline */
+	    transform-origin: left;                /* Animate from left to right */
+	}
+
+	/* Active Link Styling */
+	.nav-link:active {
+	    color: rgb(128, 255, 255);                        /* Slightly darker on click */
+	    transform: scale(0.98);                /* Slightly smaller on click */
+	}
+
+
+  </style>
+</head>
+
+<body>
+
+	<header>
+	   <div class="container">
+	     <nav>
+	       <div class="logo">AuraSync</div>
+	       <ul>
+	         <li><a href="#" class="nav-link">Home</a></li>
+			 <li><a href="#events" class="nav-link">Events</a></li>
+	         <li><a href="#about" class="nav-link">About Us</a></li>
+			 <li><a href="/user/admin-dashboard" id="admin-dashboard" class="nav-link">Admin Dashboard</a></li>
+			 <li>
+				<form th:action="@{/logout}" method="post"  >
+						        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+						        <button type="submit" class="logout-button">Log Out</button>
+						    </form>
+			 </li>
+	       </ul>
+	     </nav>
+	   </div>
+	 </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="slide-container">
+      <img th:src="@{/images/image2.jpg}" class="slide" alt="Hero Image 2" />
+      <img th:src="@{/images/image.jpg}" class="slide" alt="Hero Image 3" />
+    </div>
+    <div class="hero-content">
+      <h2>Welcome to the Best Event Management Platform</h2>
+      <p>Manage, Plan, and Enjoy Your Events Seamlessly</p>
+      <a href="/discover" class="btn">Discover More</a>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section class="events-section" id="events">
+      <div class="container">
+          <h2>Upcoming Events</h2>
+          <div class="events-container">
+              <!-- Event Card 1 -->
+              <div class="event-card">
+                  <img th:src="@{/images/1.jpg}" alt="Tech Conference 2024" class="event-img">
+                  <h3>Tech Conference 2024</h3>
+                  <p>Join the biggest tech conference of the year and expand your network.</p>
+                  <a th:href="@{/attendee-form}" class="btn">Book now</a>
+              </div>
+              <!-- Event Card 2 -->
+              <div class="event-card">
+                  <img th:src="@{/images/2.jpg}" alt="AI Workshop" class="event-img">
+                  <h3>AI Workshop</h3>
+                  <p>Dive into the world of AI with hands-on experience and expert guidance.</p>
+                  <a th:href="@{/attendee-form}" class="btn">Book now</a>
+              </div>
+              <!-- Event Card 3 -->
+              <div class="event-card">
+                  <img th:src="@{/images/3.jpg}" alt="Design Thinking Seminar" class="event-img">
+                  <h3>Design Thinking Seminar</h3>
+                  <p>Unlock creativity and innovation with the power of design thinking.</p>
+                  <a th:href="@{/attendee-form}" class="btn">Book now</a>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  
+  <!-- About Us Section -->
+  <!-- About Us Section -->
+  <section class="about-us" id="about">
+      <div class="container">
+          <h2>About Us</h2>
+          <div class="about-content">
+              <div class="about-text">
+                  <h3>Welcome to AuraSync!</h3>
+				  <br><br>
+                  <p>
+                      At EventPro, we believe in transforming the way events are managed. Our innovative platform seamlessly connects organizers and attendees, creating unforgettable experiences that foster collaboration and celebration.
+                  </p>
+				  <br>
+                  <p>
+                      With cutting-edge features and a user-friendly interface, we empower you to plan, manage, and execute events of any size with ease. From conferences and workshops to celebrations and gatherings, our tools are designed to simplify the entire process.
+                  </p>
+				  <br>
+                  <p>
+                      Join our community of passionate event organizers and attendees as we redefine the future of event management. Together, we can make every event a success!
+                  </p>
+				  <br><br><br><br>
+              </div>
+              <div class="about-image">
+                  <img th:src="@{/images/image2.jpg}" alt="About Us">
+              </div>
+          </div>
+          <div class="about-vision">
+              <h3>Our Vision</h3>
+              <p>
+                  Our vision is to revolutionize the event management landscape by leveraging technology to create more interactive, efficient, and enjoyable experiences for everyone involved.
+              </p>
+              <h3>Our Mission</h3>
+              <p>
+                  We aim to empower event organizers with innovative tools, foster a vibrant community, and promote sustainable practices in event management.
+              </p>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Event Management Platform. All rights reserved.</p>
+    </div>
+  </footer>
+
+	 <script>
+    window.addEventListener('scroll', function () {
+      const header = document.querySelector('header');
+      header.classList.toggle('scrolled', window.scrollY > 0);
+    });
+  </script>
+</body>
+
+</html>

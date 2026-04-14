@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to AuraSync!</title>
+  <style>
+    /* General Styling */
+    body {
+      background: linear-gradient(135deg, #ffccff, #ccffff);
+      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Container Styling */
+    .container {
+      text-align: center;
+      padding: 50px;
+      max-width: 650px;
+      margin: auto;
+      background-color: #ffffff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      transform: scale(0.95);
+      animation: scaleUp 1.5s ease-in-out forwards, pulseGlow 2.5s infinite alternate;
+    }
+
+    /* Logo Animation */
+    .logo img {
+      width: 150px;
+      animation: bounce 2s infinite alternate;
+    }
+
+    /* Title */
+    h1 {
+      color: #8e24aa;
+      font-size: 48px;
+      margin-bottom: 15px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    /* Event Info */
+    .event-info {
+      color: #37474f;
+      font-size: 22px;
+      margin: 25px 0;
+      animation: slideInRight 2s ease;
+    }
+
+    /* Animated Button */
+    .cta-button {
+      background-color: #6a1b9a;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 20px;
+      text-decoration: none;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 30px;
+      animation: buttonPulse 2.5s infinite alternate;
+    }
+
+    /* Subtle Text Animation */
+    p {
+      color: #424242;
+      font-size: 20px;
+      animation: fadeInUp 1.5s ease;
+      margin: 15px 0;
+    }
+
+    /* Keyframes for Animations */
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 6px 15px rgba(140, 0, 255, 0.3);
+      }
+
+      100% {
+        box-shadow: 0 6px 25px rgba(140, 0, 255, 0.6);
+      }
+    }
+
+    @keyframes scaleUp {
+      0% {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes buttonPulse {
+      0% {
+        transform: scale(1.05);
+        background-color: #8e24aa;
+      }
+
+      100% {
+        transform: scale(1);
+        background-color: #6a1b9a;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Logo with bounce animation -->
+   <!-- <div class="logo">
+      <img th:src="@{/images/image4.jpg}" alt="AuraSync Logo">
+    </div>-->
+
+    <!-- Welcome Message -->
+    <h1>Welcome to AuraSync!</h1>
+
+    <!-- Event Information -->
+    <div class="event-info">
+      <p><strong>Date:</strong> <span th:text="${eventDate}">1 Dec
+          2024</span></p>
+      <p><strong>Time:</strong> <span th:text="${eventTime}">6
+          pm</span></p>
+    </div>
+
+    <!-- Introductory Paragraph -->
+    <p>
+      We're thrilled to have you at our upcoming event! Get ready for
+      an immersive experience where every detail is crafted to
+      perfection.
+    </p>
+
+    <!-- Call-to-Action Button with pulse effect -->
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+	<style>
+	        body {
+	            font-family: Arial, sans-serif;
+	            display: flex;
+	            justify-content: center;
+	            align-items: center;
+	            height: 100vh;
+	            background-color: #f4f4f4;
+	            opacity: 0;
+	            animation: fadeIn 1s forwards;
+	        }
+
+	        @keyframes fadeIn {
+	            to {
+	                opacity: 1;
+	            }
+	        }
+
+			/* Basic styling */
+			       .success-container {
+			           text-align: center;
+			           margin-top: 50px;
+			       }
+	        .message-box {
+	            text-align: center;
+	            background-color: white;
+	            padding: 20px;
+	            border-radius: 8px;
+	            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	            transform: translateY(-20px);
+	            animation: slideIn 0.5s forwards;
+	        }
+
+	        @keyframes slideIn {
+	            to {
+	                transform: translateY(0);
+	            }
+	        }
+
+	        h1 {
+	            color: #28a745;
+	            margin: 0;
+	            font-size: 2em;
+	        }
+
+	        p {
+	            margin: 10px 0;
+	        }
+	    </style>
+</head>
+<body>
+	<div class="success-container">
+	       <!-- Tick GIF animation -->
+	       <div class="tick-animation">
+	           <img src="/source/main/resources/static/tick.gif" alt="Success Tick">
+	       </div>
+
+<div class="message-box">
+    <h1>Submission Successful!</h1>
+    <p>Your details have been submitted successfully.</p>
+    <p>You will be redirected to your details shortly...</p>
+</div>
+</div>
+<script>
+    // Get the attendee ID from the model attribute
+    const attendeeId = /*[[${attendeeId}]]*/ '1'; // Change this to handle default cases
+
+    // Redirect after 5 seconds (5000 ms)
+    setTimeout(function() {
+        window.location.href = "/attendee-details/" + attendeeId; // Redirect to the attendee details page
+    }, 2000);
+</script>
+
+</body>
+</html>

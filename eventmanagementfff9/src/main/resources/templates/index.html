@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AuraSync - Premium Event Management</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+    <!-- 1. LOADER -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progress-text">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. NAVBAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">Aura<span>Sync</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/admin-dashboard}">Admin Dashboard</a></li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" style="margin:0;">
+                            <!-- Fallback for CSRF if needed -->
+                            <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : ''}" th:value="${_csrf != null ? _csrf.token : ''}" />
+                            <button type="submit" class="logout-btn">Log Out</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="isAnonymous()">
+                        <button type="button" class="logout-btn" id="openAuthModalBtn">Login / Signup</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Parallax Fixed Video Layer -->
+    <div class="parallax-bg">
+        <video autoplay muted loop playsinline class="parallax-video">
+            <source th:src="@{/videos/hero.mp4}" src="/videos/hero.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 3. HERO SECTION -->
+    <section class="hero-wrapper" id="home">
+        <!-- Overlay to ensure readability -->
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1>Welcome to the Best<br><span>Event Management</span> Platform</h1>
+            <p class="hero-subtitle">Experience flawless planning and seamless connections. Transform the way you manage and enjoy your events, all in one cinematic platform.</p>
+            <a th:href="@{/discover}" href="/discover" class="btn-primary">Discover More</a>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span style="font-size: 0.8rem; color: #a0aec0; letter-spacing: 1px; text-transform: uppercase;">Scroll</span>
+        </div>
+    </section>
+
+    <!-- Z-index Wrapper for content sliding over parallax video -->
+    <div class="main-content">
+        
+        <!-- 4. EVENTS SECTION -->
+        <section class="section-padding" id="events">
+            <div class="container">
+                <h2 class="section-title">Upcoming <span>Events</span></h2>
+                
+                <div class="events-grid">
+                    <!-- Event Card 1 -->
+                    <div class="event-card" style="transition-delay: 0.1s;">
+                        <div class="event-img-wrap">
+                            <div class="event-img-overlay"></div>
+                            <img th:src="@{/images/1.jpg}" src="/images/1.jpg" alt="Tech Conference 2024">
+                        </div>
+                        <div class="event-content">
+                            <h3>Tech Conference 2024</h3>
+                            <p>Join the biggest tech conference of the year and expand your network with industry leaders.</p>
+                            <a th:href="@{/attendee-form}" href="/attendee-form" class="btn-book">Book Now</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Card 2 -->
+                    <div class="event-card" style="transition-delay: 0.3s;">
+                        <div class="event-img-wrap">
+                            <div class="event-img-overlay"></div>
+                            <img th:src="@{/images/2.jpg}" src="/images/2.jpg" alt="AI Workshop">
+                        </div>
+                        <div class="event-content">
+                            <h3>AI Workshop</h3>
+                            <p>Dive into the world of Artificial Intelligence with hands-on experience and expert guidance.</p>
+                            <a th:href="@{/attendee-form}" href="/attendee-form" class="btn-book">Book Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Event Card 3 -->
+                    <div class="event-card" style="transition-delay: 0.5s;">
+                        <div class="event-img-wrap">
+                            <div class="event-img-overlay"></div>
+                            <img th:src="@{/images/3.jpg}" src="/images/3.jpg" alt="Design Thinking Seminar">
+                        </div>
+                        <div class="event-content">
+                            <h3>Design Thinking Seminar</h3>
+                            <p>Unlock profound creativity and innovation with the transformative power of modern design thinking.</p>
+                            <a th:href="@{/attendee-form}" href="/attendee-form" class="btn-book">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ABOUT SECTION -->
+        <section class="section-padding about-section" id="about">
+            <div class="blob"></div>
+            <div class="container">
+                <h2 class="section-title">About <span>AuraSync</span></h2>
+                
+                <div class="about-content-area">
+                    <div class="about-text">
+                        <h2>Transforming Event Experiences</h2>
+                        <p>At AuraSync, we believe in seamlessly connecting organizers and attendees to create unforgettable, world-class experiences that foster profound collaboration and celebration.</p>
+                        <p>With highly polished features and a cinematic interface, we empower you to plan, manage, and execute events of any scale in a way that feels premium and effortless.</p>
+                        
+                        <div class="highlights-grid">
+                            <div class="highlight-box">
+                                <h4>Our Vision</h4>
+                                <span>Revolutionize management with scalable, enjoyable tools for everyone.</span>
+                            </div>
+                            <div class="highlight-box">
+                                <h4>Our Mission</h4>
+                                <span>Empower organizers while promoting a vibrant and sustainable community.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-image">
+                        <img th:src="@{/images/image2.jpg}" src="/images/image2.jpg" alt="About AuraSync">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FOOTER -->
+        <footer>
+            <div class="container">
+                <p>&copy; 2026 <span>AuraSync</span> Event Management Platform. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- External JS -->
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+
+    <!-- 7. AUTH MODAL -->
+    <div class="auth-modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <button class="close-modal" id="closeAuthModal">&times;</button>
+            
+            <div class="form-container" id="signInContainer">
+                <form th:action="@{/login}" method="post">
+                    <h2>Sign In</h2>
+                    <div class="error-msg" th:if="${param.error}">Invalid username or password.</div>
+                    <div class="success-msg" th:if="${param.signupSuccess}">Signup successful! Please log in.</div>
+                    <input type="text" name="username" placeholder="Username" required />
+                    <input type="password" name="password" placeholder="Password" required />
+                    <!-- CSRF Token handled automatically by thymeleaf form, but can force manually: -->
+                    <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : ''}" th:value="${_csrf != null ? _csrf.token : ''}" />
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Sign In</button>
+                    <p class="toggle-text">Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+                </form>
+            </div>
+
+            <div class="form-container" id="signUpContainer" style="display: none;">
+                <form th:action="@{/signup}" method="post">
+                    <h2>Create Account</h2>
+                    <div class="error-msg" th:if="${param.signupError}">Username already exists.</div>
+                    <input type="text" name="username" placeholder="Username" required />
+                    <input type="password" name="password" placeholder="Password" required />
+                    <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : ''}" th:value="${_csrf != null ? _csrf.token : ''}" />
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Sign Up</button>
+                    <p class="toggle-text">Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Inline script to keep Modal open if there are param errors on load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('error') || urlParams.has('signupSuccess') || urlParams.has('signupError')) {
+                const modal = document.getElementById('authModal');
+                if(modal) {
+                    modal.classList.add('active');
+                    // If signup error, show signup container
+                    if(urlParams.has('signupError')) {
+                        document.getElementById('signInContainer').style.display = 'none';
+                        document.getElementById('signUpContainer').style.display = 'block';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

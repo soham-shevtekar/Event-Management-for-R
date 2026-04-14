@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee Details</title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+		.attendee-image {
+		           max-width: 200px;  /* Limit the width to 200px */
+		           max-height: 200px; /* Limit the height to 200px */
+		           object-fit: cover; /* Ensures the image keeps aspect ratio and fits in the box */
+		           border-radius: 10px; /* Optional: adds rounded corners to the image */
+		       }
+        /* Container for the details */
+        .details-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        /* Styling for the image */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+            opacity: 0;
+            animation: fadeInImage 1.5s forwards, scaleIn 0.6s forwards;
+        }
+
+        /* Animation for the whole container */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for the image */
+        @keyframes fadeInImage {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Scaling animation for image */
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Button styles */
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="details-container">
+        <h2>Your Details</h2>
+
+        <p><strong>Your Image:</strong></p>
+        <!-- Attendee image -->
+        <img th:src="@{/uploads/{filename}(filename=${attendee.imagePath})}" alt="Attendee Image" class="attendee-image" />
+
+        <p><strong>Name:</strong> <span th:text="${attendee.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${attendee.email}"></span></p>
+        <p><strong>Age:</strong> <span th:text="${attendee.age}"></span></p>
+        <p><strong>Address:</strong> <span th:text="${attendee.address}"></span></p>
+        <p><strong>Contact:</strong> <span th:text="${attendee.contact}"></span></p>
+        <p><strong>Date of Birth:</strong> <span th:text="${attendee.dob}"></span></p>
+		<p><strong>Category of Event:</strong> <span th:text="${attendee.category}"></span></p>
+
+
+        <!-- Back to Form Button -->
+        <a href="/" class="back-button">Back to website</a>
+    </div>
+
+</body>
+</html>

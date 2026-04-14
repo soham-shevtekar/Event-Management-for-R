@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Navbar Styling */
+        header {
+            background-color: #006d77;
+            color: #fff;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #80ffdb;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #80ffdb;
+        }
+
+        /* Hero Section */
+		.hero {
+		    position: relative;
+		    width: 100%;
+		    height: 100vh;
+		    overflow: hidden;
+		}
+		.hero-content {
+		    position: relative; /* Change from absolute to relative */
+		    text-align: center;
+		    color: #fff;
+		    z-index: 10;
+		}
+		.hero-bg {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 0;
+		}
+
+		.hero-image {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover; /* Ensures the image covers the section */
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		}
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .cta-button {
+            background-color: #80ffdb;
+            color: #333;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #333;
+            color: #80ffdb;
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 50px 0;
+            background-color: #f8f9fa;
+            position: relative;
+            text-align: center;
+        }
+
+        .about-us h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #006d77;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .about-content {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .about-text {
+            width: 60%;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .about-image {
+            width: 30%;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #006d77;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">Event Management Hub</div>
+            <ul>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+
+	<!-- Hero Section -->
+	<section class="hero">
+	    <div class="hero-bg">
+	        <img th:src="@{/images/6.jpg}" class="hero-image" alt="Hero Image" />
+	    </div>
+	    <div class="hero-content">
+	        <h1>Welcome to AuraSync</h1>
+	        <p>Your one-stop solution for all event planning needs.</p>
+	        <a th:href="@{/attendee-form}" class="cta-button">Get Started</a>
+	    </div>
+	</section>
+	
+    <!-- About Us Section -->
+    <section class="about-us" id="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>At Event Management Hub, we specialize in organizing events that create unforgettable experiences.
+                    Our team of experts will help you plan every detail, from venue selection to entertainment.</p>
+                <p>Whether you're planning a wedding, corporate event, or a special celebration, we have the tools
+                    and knowledge to make it a success.</p>
+            </div>
+            <div class="about-image">
+                <img th:src="@{/images/4.jpg}" alt="Event Image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Event Management Hub. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
